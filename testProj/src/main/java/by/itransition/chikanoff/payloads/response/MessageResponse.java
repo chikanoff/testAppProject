@@ -1,17 +1,13 @@
 package by.itransition.chikanoff.payloads.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class MessageResponse {
-    private String message;
+    private @Getter @Setter
+    String message;
 
     public MessageResponse(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
         this.message = message;
     }
 }
