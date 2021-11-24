@@ -1,6 +1,5 @@
 package by.itransition.chikanoff.services;
 
-import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -5,7 +5,6 @@ import by.itransition.chikanoff.exceptions.DataExistException;
 import by.itransition.chikanoff.payloads.request.SignupRequest;
 import by.itransition.chikanoff.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 @Service

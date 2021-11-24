@@ -1,16 +1,11 @@
 package by.itransition.chikanoff.controllers;
 
-import by.itransition.chikanoff.exceptions.DataExistException;
 import by.itransition.chikanoff.payloads.request.LoginRequest;
 import by.itransition.chikanoff.payloads.request.SignupRequest;
 import by.itransition.chikanoff.payloads.response.JwtResponse;
-import by.itransition.chikanoff.payloads.response.MessageResponse;
 import by.itransition.chikanoff.services.AuthService;
 import by.itransition.chikanoff.services.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,10 +31,9 @@ public class AuthController {
     }
 
     @PostMapping(value = "/signup")
-    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signUpRequest) {
+    public void registerUser(@RequestBody SignupRequest signUpRequest) {
 
         userService.createUser(signUpRequest);
 
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

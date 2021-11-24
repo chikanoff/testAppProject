@@ -1,7 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.6.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "org.liquibase.gradle" version "2.1.0"
+    id 'java'
 }
 apply plugin: 'java'
 
@@ -10,40 +11,40 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	mysqlVersion = "8.0.21"
-	tomcatVersion = "9.0.40"
-	springSecurityVersion = "5.5.2"
-	javaxValidationVersion = "2.0.1.Final"
-	springBootVersion = "2.5.6"
-	jwtVersion = "0.9.1"
+    mysqlVersion = "8.0.21"
+    tomcatVersion = "9.0.40"
+    springSecurityVersion = "5.5.2"
+    javaxValidationVersion = "2.0.1.Final"
+    springBootVersion = "2.5.6"
+    jwtVersion = "0.9.1"
 }
 
 dependencies {
-	implementation "org.apache.tomcat:tomcat-catalina:$tomcatVersion"
-	implementation "mysql:mysql-connector-java:$mysqlVersion"
-	implementation "org.springframework.security:spring-security-core:$springSecurityVersion"
-	implementation "org.springframework.security:spring-security-web:$springSecurityVersion"
-	implementation "javax.validation:validation-api:$javaxValidationVersion"
-	implementation "org.springframework.security:spring-security-config:$springSecurityVersion"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-	implementation "org.springframework.boot:spring-boot-starter-web"
-	implementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
-	compileOnly "org.projectlombok:lombok"
-	annotationProcessor "org.projectlombok:lombok"
-	testImplementation "org.springframework.boot:spring-boot-starter-test"
-	implementation "io.jsonwebtoken:jjwt:$jwtVersion"
+    implementation "org.liquibase:liquibase-core"
+    implementation "mysql:mysql-connector-java:$mysqlVersion"
+    implementation "org.springframework.security:spring-security-core:$springSecurityVersion"
+    implementation "org.springframework.security:spring-security-web:$springSecurityVersion"
+    implementation "javax.validation:validation-api:$javaxValidationVersion"
+    implementation "org.springframework.security:spring-security-config:$springSecurityVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    implementation "io.jsonwebtoken:jjwt:$jwtVersion"
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
