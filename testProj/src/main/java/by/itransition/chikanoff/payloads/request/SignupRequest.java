@@ -1,5 +1,6 @@
 package by.itransition.chikanoff.payloads.request;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,14 +31,4 @@ public class SignupRequest {
     @Size(min = 8, max = 40)
     private @Getter @Setter
     String password;
-
-    @Override
-    public String toString() {
-        return "SignupRequest{" +
-                "fullName='" + fullName + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

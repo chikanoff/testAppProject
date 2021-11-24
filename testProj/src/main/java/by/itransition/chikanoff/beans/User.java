@@ -6,32 +6,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
+@Getter
+@Setter
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private @Getter Long id;
+    private Long id;
 
     @Column(name = "fullName", nullable = false, length = 128)
-    private @Getter @Setter
-    String fullName;
+    private String fullName;
 
     @Column(nullable = false, unique = true, length = 128)
-    private @Getter @Setter
-    String username;
+    private String username;
 
     @Column(nullable = false, unique = true, length = 128)
-    private @Getter @Setter
-    String email;
+    private String email;
 
     @Column(nullable = false, length = 256)
-    private @Getter @Setter
-    String password;
+    private String password;
 
     public User(String fullName, String username, String email, String password) {
         this.fullName = fullName;
