@@ -14,18 +14,15 @@
                 <constraints nullable="false"/>
             </column>
             <column name="username" type="varchar(128)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="email" type="varchar(128)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="password" type="varchar(256)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         <addAutoIncrement tableName="users"  columnDataType="bigInt" columnName="id" startWith="1" incrementBy="1" />
-        <addUniqueConstraint tableName="users"
-                             columnNames="username,email"
-                             constraintName="u-username-email"/>
     </changeSet>
 </databaseChangeLog>

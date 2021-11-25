@@ -1,6 +1,5 @@
 package by.itransition.chikanoff.payloads.request;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,27 +7,25 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Getter
+@Setter
 public class SignupRequest {
 
     @NotBlank
     @Size(min = 3, max = 128)
-    private @Getter @Setter
-    String fullName;
+    private String fullName;
 
     @NotBlank
     @Size(min = 5, max = 32)
-    private @Getter @Setter
-    String username;
+    private String username;
 
     @NotBlank
     @Size(max = 64)
     @Email
-    private @Getter @Setter
-    String email;
+    private String email;
 
 
     @NotBlank
     @Size(min = 8, max = 40)
-    private @Getter @Setter
-    String password;
+    private String password;
 }

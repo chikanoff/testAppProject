@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,8 +18,6 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder encoder;
-
     private final JwtUtils jwtUtils;
 
     public JwtResponse login(String username, String password){
@@ -30,9 +27,9 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        return new JwtResponse(jwt, userDetails.getId(), userDetails.getFullName(), userDetails.getUsername(), userDetails.getEmail());
+        return JwtResponse.builder()
+                          .token(jwt)
+                          .build();
     }
 
 }

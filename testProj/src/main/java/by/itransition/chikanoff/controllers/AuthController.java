@@ -32,8 +32,6 @@ public class AuthController {
 
     @PostMapping(value = "/signup")
     public void registerUser(@RequestBody SignupRequest signUpRequest) {
-
         userService.createUser(signUpRequest);
-
     }
 }
