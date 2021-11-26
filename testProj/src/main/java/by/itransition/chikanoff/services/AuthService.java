@@ -2,7 +2,6 @@ package by.itransition.chikanoff.services;
 
 import by.itransition.chikanoff.jwt.JwtUtils;
 import by.itransition.chikanoff.payloads.response.JwtResponse;
-import by.itransition.chikanoff.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
-
-    private final UserRepository userRepository;
 
     private final JwtUtils jwtUtils;
 
