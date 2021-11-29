@@ -79,7 +79,7 @@ public class AuthControllerTest extends IntegrationTestBase {
     }
 
     @Test
-    public void UsernameExistSignUpReturnsStatusConflict() throws Exception {
+    public void usernameExistSignUpReturnsStatusConflict() throws Exception {
         User user = createTestUser();
         SignupRequest req = new SignupRequest();
         req.setFullName(user.getFullName());
@@ -96,7 +96,7 @@ public class AuthControllerTest extends IntegrationTestBase {
     }
 
     @Test
-    public void EmailExistSignUpReturnsStatusConflict() throws Exception {
+    public void emailExistSignUpReturnsStatusConflict() throws Exception {
         User user = createTestUser();
         SignupRequest req = new SignupRequest();
         req.setFullName(user.getFullName());
