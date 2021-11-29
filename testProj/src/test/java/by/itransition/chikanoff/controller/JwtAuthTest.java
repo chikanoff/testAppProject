@@ -1,40 +1,37 @@
 package by.itransition.chikanoff.controller;
 
+import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
+import by.itransition.chikanoff.jwt.JwtUtils;
 import by.itransition.chikanoff.payloads.request.LoginRequest;
-import by.itransition.chikanoff.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
-public class TestControllerTest {
+public class JwtAuthTest extends IntegrationTestBase {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
 
     @Test
     public void existentUserGetTokenAndAuthentication() throws Exception {
@@ -51,23 +48,9 @@ public class TestControllerTest {
                 .andExpect(status().isOk()).andReturn();
 
         String response = result.getResponse().getContentAsString();
-        System.out.println(response);
         response = response.replace("{\"token\":\"", "");
-        System.out.println(response);
         String token = response.replace("\"}", "");
-        System.out.println(token);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/test")
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk());
-    }
-
-    private User createTestUser(){
-        return userRepository.saveAndFlush(new User(
-                "testFullName",
-                "testUsername",
-                "testEmail@gmail.com",
-                encoder.encode("password")
-        ));
+        assertThat(jwtUtils.getUserNameFromJwtToken(token)).isEqualTo(req.getUsername());
     }
 }

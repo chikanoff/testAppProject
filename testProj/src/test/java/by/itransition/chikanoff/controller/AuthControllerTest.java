@@ -1,5 +1,6 @@
 package by.itransition.chikanoff.controller;
 
+import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.payloads.request.LoginRequest;
 import by.itransition.chikanoff.payloads.request.SignupRequest;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
-public class AuthControllerTest {
+public class AuthControllerTest extends IntegrationTestBase {
     @Autowired
     private MockMvc mvc;
 
@@ -31,9 +31,6 @@ public class AuthControllerTest {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
 
     @Test
     public void signInReturnsStatusOk() throws Exception {
@@ -113,15 +110,6 @@ public class AuthControllerTest {
                                 .param("sendWelcomeMail", "true")
                                 .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isConflict());
-    }
-
-    private User createTestUser(){
-        return userRepository.saveAndFlush(new User(
-                "testFullName",
-                "testUsername",
-                "testEmail@gmail.com",
-                encoder.encode("password")
-        ));
     }
 
     @AfterEach

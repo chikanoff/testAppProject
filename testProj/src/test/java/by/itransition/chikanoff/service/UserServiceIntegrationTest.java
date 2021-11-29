@@ -1,5 +1,6 @@
 package by.itransition.chikanoff.service;
 
+import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.payloads.request.SignupRequest;
 import by.itransition.chikanoff.repository.UserRepository;
@@ -11,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest
-public class UserServiceIntegrationTest {
+public class UserServiceIntegrationTest extends IntegrationTestBase {
     @Autowired
     private UserRepository userRepository;
 
@@ -32,8 +32,6 @@ public class UserServiceIntegrationTest {
     @InjectMocks
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder encoder;
 
     @Test
     public void createUserTest(){
@@ -73,15 +71,6 @@ public class UserServiceIntegrationTest {
         req.setPassword("password");
 
         assertThatThrownBy(() -> userService.createUser(req)).hasMessage("User with this username already exist");
-    }
-
-    private User createTestUser(){
-        return userRepository.saveAndFlush(new User(
-                "testFullName",
-                "testUsername",
-                "testEmail@gmail.com",
-                encoder.encode("password")
-        ));
     }
 
     @AfterEach

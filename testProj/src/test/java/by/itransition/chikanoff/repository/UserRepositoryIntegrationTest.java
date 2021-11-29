@@ -1,12 +1,12 @@
 package by.itransition.chikanoff.repository;
 
+import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,9 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
-public class UserRepositoryIntegrationTest {
-    @Autowired
-    private TestEntityManager entityManager;
+public class UserRepositoryIntegrationTest extends IntegrationTestBase {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,9 +24,7 @@ public class UserRepositoryIntegrationTest {
     @Test
     public void whenFindByName_thenReturnUser() {
         // given
-        User user = new User("asd", "user", "email@gma.co", "password");
-        entityManager.persist(user);
-        entityManager.flush();
+        User user = createTestUser();
 
         // when
         User found = userRepository.findByUsername(user.getUsername()).get();
@@ -39,19 +35,15 @@ public class UserRepositoryIntegrationTest {
 
     @Test
     public void whenEmailExist_thenReturnTrue(){
-        User user = new User("asd", "user", "email@gma.co", "password");
-        entityManager.persist(user);
-        entityManager.flush();
+        User user = createTestUser();
 
-        assertThat(userRepository.existsByEmail("email@gma.co")).isTrue();
+        assertThat(userRepository.existsByEmail(user.getEmail())).isTrue();
     }
 
     @Test
     public void whenUsernameExist_thenReturnTrue(){
-        User user = new User("asd", "user", "email@gma.co", "password");
-        entityManager.persist(user);
-        entityManager.flush();
+        User user = createTestUser();
 
-        assertThat(userRepository.existsByUsername("user")).isTrue();
+        assertThat(userRepository.existsByUsername(user.getUsername())).isTrue();
     }
 }
