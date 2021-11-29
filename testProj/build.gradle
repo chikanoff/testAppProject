@@ -1,0 +1,61 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+apply plugin: 'java'
+
+group = 'by.itransition.chikanoff'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    mysqlVersion = "8.0.21"
+    tomcatVersion = "9.0.40"
+    springSecurityVersion = "5.5.2"
+    javaxValidationVersion = "2.0.1.Final"
+    springBootVersion = "2.5.6"
+    jwtVersion = "0.9.1"
+    testContainersVersion = "1.16.2"
+    jUnitVersion = "4.13.2"
+    mockitoVersion = "4.0.0"
+    testContainersVersion = "2.0.16"
+}
+
+dependencies {
+    implementation "org.liquibase:liquibase-core"
+    implementation "mysql:mysql-connector-java:$mysqlVersion"
+    implementation "org.springframework.security:spring-security-core:$springSecurityVersion"
+    implementation "org.springframework.security:spring-security-web:$springSecurityVersion"
+    implementation "javax.validation:validation-api:$javaxValidationVersion"
+    implementation "org.springframework.security:spring-security-config:$springSecurityVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+    implementation "io.jsonwebtoken:jjwt:$jwtVersion"
+    implementation "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+
+    testImplementation "org.projectlombok:lombok"
+    testAnnotationProcessor "org.projectlombok:lombok"
+    testImplementation "org.liquibase:liquibase-core"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.4"
+    testImplementation "com.playtika.testcontainers:embedded-mysql:${testContainersVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+
+}
+
+test {
+    useJUnitPlatform()
+}
