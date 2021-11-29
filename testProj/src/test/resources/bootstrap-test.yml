@@ -4,3 +4,4 @@ embedded:
         docker-image: mysql:latest
         user: mysql
         password: root
+

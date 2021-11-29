@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.0'
+    id 'org.springframework.boot' version '2.5.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -51,7 +51,6 @@ dependencies {
     testImplementation "org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.4"
     testImplementation "com.playtika.testcontainers:embedded-mysql:${testContainersVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    testImplementation("org.assertj:assertj-core:3.10.0")
 
 }
 

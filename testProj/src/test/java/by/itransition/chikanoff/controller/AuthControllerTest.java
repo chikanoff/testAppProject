@@ -2,18 +2,15 @@ package by.itransition.chikanoff.controller;
 
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.payloads.request.LoginRequest;
+import by.itransition.chikanoff.payloads.request.SignupRequest;
 import by.itransition.chikanoff.repository.UserRepository;
-import by.itransition.chikanoff.services.AuthService;
-import by.itransition.chikanoff.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
-import org.mockito.Mock;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,23 +29,17 @@ public class AuthControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @Autowired
     private UserRepository userRepository;
-
-    @Mock
-    private AuthService authService;
-
-    @Mock
-    private UserService userService;
 
     @Autowired
     private PasswordEncoder encoder;
 
     @Test
     public void signInReturnsStatusOk() throws Exception {
-        User user = createTestUser();
+        createTestUser();
         LoginRequest req = new LoginRequest();
-        req.setUsername("user");
+        req.setUsername("testUsername");
         req.setPassword("password");
 
         mvc.perform(
@@ -59,15 +50,79 @@ public class AuthControllerTest {
                    .andExpect(status().isOk());
     }
 
+    @Test
+    public void signInReturnsStatusUnauthorized() throws Exception {
+        User user = createTestUser();
+        LoginRequest req = new LoginRequest();
+        req.setUsername("badUsername");
+        req.setPassword("password");
+
+        mvc.perform(
+                        post("/api/auth/signin")
+                                .contentType("application/json")
+                                .param("sendWelcomeMail", "true")
+                                .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void signUpReturnsStatusOk() throws Exception {
+        SignupRequest req = new SignupRequest();
+        req.setFullName("testFullName");
+        req.setUsername("testUsername");
+        req.setEmail("email@gmail.com");
+        req.setPassword("password");
+
+        mvc.perform(
+                        post("/api/auth/signup")
+                                .contentType("application/json")
+                                .param("sendWelcomeMail", "true")
+                                .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void UsernameExistSignUpReturnsStatusConflict() throws Exception {
+        User user = createTestUser();
+        SignupRequest req = new SignupRequest();
+        req.setFullName(user.getFullName());
+        req.setUsername(user.getUsername());
+        req.setEmail("qwe@gmail.com");
+        req.setPassword("password");
+
+        mvc.perform(
+                        post("/api/auth/signup")
+                                .contentType("application/json")
+                                .param("sendWelcomeMail", "true")
+                                .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void EmailExistSignUpReturnsStatusConflict() throws Exception {
+        User user = createTestUser();
+        SignupRequest req = new SignupRequest();
+        req.setFullName(user.getFullName());
+        req.setUsername("newUsername");
+        req.setEmail(user.getEmail());
+        req.setPassword("password");
+
+        mvc.perform(
+                        post("/api/auth/signup")
+                                .contentType("application/json")
+                                .param("sendWelcomeMail", "true")
+                                .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isConflict());
+    }
+
     private User createTestUser(){
-        return userRepository.save(new User(
+        return userRepository.saveAndFlush(new User(
                 "testFullName",
                 "testUsername",
                 "testEmail@gmail.com",
-                encoder.encode("testPassword")
+                encoder.encode("password")
         ));
     }
-
 
     @AfterEach
     public void resetDb(){

@@ -9,3 +9,5 @@ spring:
         password: ${embedded.mysql.password}
 
 
+jwtSecret: 'asdasd'
+jwtExpirationMs: '1231111'
