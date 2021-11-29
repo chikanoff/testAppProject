@@ -4,24 +4,14 @@ import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.payloads.request.LoginRequest;
 import by.itransition.chikanoff.payloads.request.SignupRequest;
-import by.itransition.chikanoff.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@AutoConfigureWebTestClient
 public class AuthControllerTest extends IntegrationTestBase {
     @Autowired
     private MockMvc mvc;
@@ -29,14 +19,11 @@ public class AuthControllerTest extends IntegrationTestBase {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Test
     public void signInReturnsStatusOk() throws Exception {
-        createTestUser();
+        User user = createTestUser();
         LoginRequest req = new LoginRequest();
-        req.setUsername("testUsername");
+        req.setUsername(user.getUsername());
         req.setPassword("password");
 
         mvc.perform(
@@ -110,10 +97,5 @@ public class AuthControllerTest extends IntegrationTestBase {
                                 .param("sendWelcomeMail", "true")
                                 .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isConflict());
-    }
-
-    @AfterEach
-    public void resetDb(){
-        userRepository.deleteAll();
     }
 }

@@ -3,35 +3,20 @@ package by.itransition.chikanoff.service;
 import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.payloads.request.SignupRequest;
-import by.itransition.chikanoff.repository.UserRepository;
 import by.itransition.chikanoff.services.UserService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@ActiveProfiles("test")
-@RunWith(SpringRunner.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@SpringBootTest
 public class UserServiceIntegrationTest extends IntegrationTestBase {
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     @InjectMocks
     private UserService userService;
-
 
     @Test
     public void createUserTest(){
@@ -43,7 +28,7 @@ public class UserServiceIntegrationTest extends IntegrationTestBase {
 
         userService.createUser(req);
 
-        List<User> users = userRepository.findAll();
+        List<User> users = getUserRepository().findAll();
         User user = users.get(users.size()-1);
         assertThat(user.getUsername()).isEqualTo(req.getUsername());
         assertThat(user.getEmail()).isEqualTo(req.getEmail());
@@ -71,10 +56,5 @@ public class UserServiceIntegrationTest extends IntegrationTestBase {
         req.setPassword("password");
 
         assertThatThrownBy(() -> userService.createUser(req)).hasMessage("User with this username already exist");
-    }
-
-    @AfterEach
-    public void resetDb(){
-        userRepository.deleteAll();
     }
 }
