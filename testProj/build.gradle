@@ -51,6 +51,7 @@ dependencies {
     testImplementation "org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.4"
     testImplementation "com.playtika.testcontainers:embedded-mysql:${testContainersVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testImplementation("org.assertj:assertj-core:3.10.0")
 
 }
 
