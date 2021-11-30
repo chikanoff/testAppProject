@@ -12,10 +12,8 @@ public class UserRepositoryIntegrationTest extends IntegrationTestBase {
     public void whenFindByName_thenReturnUser() {
         // given
         User user = createTestUser();
-
         // when
         User found = getUserRepository().findByUsername(user.getUsername()).get();
-
         // then
         assertThat(found.getFullName()).isEqualTo(user.getFullName());
         assertThat(found.getEmail()).isEqualTo(user.getEmail());
@@ -25,7 +23,6 @@ public class UserRepositoryIntegrationTest extends IntegrationTestBase {
     @Test
     public void whenEmailExist_thenReturnTrue(){
         User user = createTestUser();
-
         assertThat(getUserRepository().existsByEmail(user.getEmail())).isTrue();
     }
 
