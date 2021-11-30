@@ -19,6 +19,7 @@ public class AuthControllerTest extends IntegrationTestBase {
     @Autowired
     private ObjectMapper objectMapper;
 
+
     @Test
     public void signInReturnsStatusOk() throws Exception {
         User user = createTestUser();

@@ -1,4 +1,4 @@
-package by.itransition.chikanoff.controller;
+package by.itransition.chikanoff.filters;
 
 import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class JwtAuthTest extends IntegrationTestBase {
+public class JwtUtilsTest extends IntegrationTestBase {
 
     @Autowired
     private MockMvc mvc;
@@ -26,7 +26,7 @@ public class JwtAuthTest extends IntegrationTestBase {
     private ObjectMapper objectMapper;
 
     @Test
-    public void existentUserGetTokenAndAuthentication() throws Exception {
+    public void validateJwtTokenReturnsTrue() throws Exception {
         User user = createTestUser();
         LoginRequest req = new LoginRequest();
         req.setUsername(user.getUsername());
@@ -42,8 +42,11 @@ public class JwtAuthTest extends IntegrationTestBase {
         String token = result.getResponse().getContentAsString()
                              .replace("{\"token\":\"", "")
                              .replace("\"}", "");
-
-        assertThat(jwtUtils.getUserNameFromJwtToken(token)).isEqualTo(req.getUsername());
+        assertThat(jwtUtils.validateJwtToken(token)).isTrue();
     }
 
+    @Test
+    public void validateJwtTokenReturnsFalse(){
+        assertThat(jwtUtils.validateJwtToken("fake token")).isFalse();
+    }
 }

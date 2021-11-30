@@ -1,4 +1,4 @@
-package by.itransition.chikanoff.controller;
+package by.itransition.chikanoff.filters;
 
 import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
@@ -7,14 +7,16 @@ import by.itransition.chikanoff.payloads.request.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class JwtAuthTest extends IntegrationTestBase {
+public class AuthTokenFilterTests extends IntegrationTestBase {
 
     @Autowired
     private MockMvc mvc;
@@ -26,7 +28,7 @@ public class JwtAuthTest extends IntegrationTestBase {
     private ObjectMapper objectMapper;
 
     @Test
-    public void existentUserGetTokenAndAuthentication() throws Exception {
+    public void authFilterTokenReturnsStatusOk() throws Exception {
         User user = createTestUser();
         LoginRequest req = new LoginRequest();
         req.setUsername(user.getUsername());
@@ -43,7 +45,10 @@ public class JwtAuthTest extends IntegrationTestBase {
                              .replace("{\"token\":\"", "")
                              .replace("\"}", "");
 
-        assertThat(jwtUtils.getUserNameFromJwtToken(token)).isEqualTo(req.getUsername());
-    }
+        mvc.perform(get("/api/test/")
+                   .accept(MediaType.APPLICATION_JSON)
+                   .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                   .andExpect(status().isOk());
 
+    }
 }
