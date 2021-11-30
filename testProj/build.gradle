@@ -4,8 +4,6 @@ plugins {
     id 'java'
     id 'jacoco'
 }
-apply plugin: 'java'
-apply plugin: 'jacoco'
 
 group = 'by.itransition.chikanoff'
 version = '0.0.1-SNAPSHOT'
@@ -60,7 +58,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
 }
 
 def qualityExcludeList = [

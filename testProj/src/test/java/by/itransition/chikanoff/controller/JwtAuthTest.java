@@ -39,9 +39,9 @@ public class JwtAuthTest extends IntegrationTestBase {
                                 .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk()).andReturn();
 
-        String response = result.getResponse().getContentAsString();
-        response = response.replace("{\"token\":\"", "");
-        String token = response.replace("\"}", "");
+        String token = result.getResponse().getContentAsString()
+                             .replace("{\"token\":\"", "")
+                             .replace("\"}", "");
 
         assertThat(jwtUtils.getUserNameFromJwtToken(token)).isEqualTo(req.getUsername());
     }

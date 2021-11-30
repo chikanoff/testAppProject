@@ -12,9 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AuthTokenFilterTests extends IntegrationTestBase {
@@ -42,15 +41,14 @@ public class AuthTokenFilterTests extends IntegrationTestBase {
                                 .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk()).andReturn();
 
-        String response = result.getResponse().getContentAsString();
-        response = response.replace("{\"token\":\"", "");
-        String token = response.replace("\"}", "");
+        String token = result.getResponse().getContentAsString()
+                             .replace("{\"token\":\"", "")
+                             .replace("\"}", "");
 
-        MvcResult resultToken = mvc.perform(get("/api/test/")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .content(token)).andExpect(status().isOk()).andReturn();
+        mvc.perform(get("/api/test/")
+                   .accept(MediaType.APPLICATION_JSON)
+                   .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                   .andExpect(status().isOk());
 
-        assertThat(200).isEqualTo(resultToken.getResponse().getStatus());
     }
 }
