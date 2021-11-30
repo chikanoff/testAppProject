@@ -2,8 +2,10 @@ plugins {
     id 'org.springframework.boot' version '2.5.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'jacoco'
 }
 apply plugin: 'java'
+apply plugin: 'jacoco'
 
 group = 'by.itransition.chikanoff'
 version = '0.0.1-SNAPSHOT'
@@ -58,4 +60,51 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
+
+def qualityExcludeList = [
+        '**/beans/**',
+        '**/exceptions/**',
+        '**/payloads/**'
+]
+
+jacocoTestReport {
+    dependsOn test
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: qualityExcludeList)
+        }))
+    }
+
+    reports {
+        html.destination file("${buildDir}/reports/jacoco/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: qualityExcludeList)
+        }))
+    }
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.9
+            }
+        }
+        rule {
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+        }
+    }
+}
+check.dependsOn jacocoTestCoverageVerification
+
