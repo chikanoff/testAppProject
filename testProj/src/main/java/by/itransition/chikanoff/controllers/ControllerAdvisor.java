@@ -15,10 +15,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DataExistException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    public MessageResponse handleEmailExistException(DataExistException ex){
+    public MessageResponse handleEmailExistException(DataExistException ex) {
         return MessageResponse.builder()
                               .message(ex.getMessage())
                               .build();
     }
-
 }

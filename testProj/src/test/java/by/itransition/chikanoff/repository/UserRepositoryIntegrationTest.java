@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserRepositoryIntegrationTest extends IntegrationTestBase {
 
     @Test
-    public void whenFindByName_thenReturnUser() {
+    public void findByNameReturnsUser() {
         // given
         User user = createTestUser();
         // when
@@ -21,13 +21,13 @@ public class UserRepositoryIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void whenEmailExist_thenReturnTrue(){
+    public void findByEmailReturnsUser() {
         User user = createTestUser();
         assertThat(getUserRepository().existsByEmail(user.getEmail())).isTrue();
     }
 
     @Test
-    public void whenUsernameExist_thenReturnTrue(){
+    public void existByUsernameReturnsTrue() {
         User user = createTestUser();
 
         assertThat(getUserRepository().existsByUsername(user.getUsername())).isTrue();

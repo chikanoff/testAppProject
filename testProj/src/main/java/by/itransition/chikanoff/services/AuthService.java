@@ -17,7 +17,7 @@ public class AuthService {
 
     private final JwtUtils jwtUtils;
 
-    public JwtResponse login(String username, String password){
+    public JwtResponse login(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
 
@@ -28,5 +28,4 @@ public class AuthService {
                           .token(jwt)
                           .build();
     }
-
 }

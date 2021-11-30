@@ -24,7 +24,7 @@ public abstract class IntegrationTestBase {
     @Autowired
     private PasswordEncoder encoder;
 
-    public User createTestUser(){
+    public User createTestUser() {
         return userRepository.saveAndFlush(new User(
                 "testFullName",
                 "testUsername",
@@ -34,7 +34,7 @@ public abstract class IntegrationTestBase {
     }
 
     @AfterEach
-    public void resetDb(){
+    public void resetDb() {
         userRepository.deleteAll();
     }
 }

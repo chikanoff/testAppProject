@@ -19,7 +19,7 @@ public class UserServiceIntegrationTest extends IntegrationTestBase {
     private UserService userService;
 
     @Test
-    public void createUserTest(){
+    public void createUserTest() {
         SignupRequest req = new SignupRequest();
         req.setFullName("user1");
         req.setUsername("user1");
@@ -29,13 +29,13 @@ public class UserServiceIntegrationTest extends IntegrationTestBase {
         userService.createUser(req);
 
         List<User> users = getUserRepository().findAll();
-        User user = users.get(users.size()-1);
+        User user = users.get(users.size() - 1);
         assertThat(user.getUsername()).isEqualTo(req.getUsername());
         assertThat(user.getEmail()).isEqualTo(req.getEmail());
     }
 
     @Test
-    public void checkEmailExistTest(){
+    public void checkEmailExistTest() {
         User user = createTestUser();
         SignupRequest req = new SignupRequest();
         req.setFullName(user.getFullName());
@@ -47,7 +47,7 @@ public class UserServiceIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void checkUsernameExistTest(){
+    public void checkUsernameExistTest() {
         User user = createTestUser();
         SignupRequest req = new SignupRequest();
         req.setFullName(user.getFullName());

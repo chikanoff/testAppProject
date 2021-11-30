@@ -27,13 +27,13 @@ public class UserService {
     }
 
     private void checkEmailExist(String email) throws DataExistException {
-        if(userRepository.existsByEmail(email)){
+        if (userRepository.existsByEmail(email)) {
             throw new DataExistException("User with this email already exist");
         }
     }
 
     private void checkUsernameExist(String username) throws DataExistException {
-        if(userRepository.existsByUsername(username)){
+        if (userRepository.existsByUsername(username)) {
             throw new DataExistException("User with this username already exist");
         }
     }

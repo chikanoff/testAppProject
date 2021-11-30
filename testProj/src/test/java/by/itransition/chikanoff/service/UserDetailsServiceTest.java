@@ -14,7 +14,7 @@ public class UserDetailsServiceTest extends IntegrationTestBase {
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
-    public void loadByUsernameReturnsCorrectUsername(){
+    public void loadByUsernameReturnsCorrectUsername() {
         User user = createTestUser();
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         assertThat(userDetails.getUsername()).isEqualTo(user.getUsername());

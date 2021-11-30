@@ -46,7 +46,7 @@ public class JwtUtilsTest extends IntegrationTestBase {
     }
 
     @Test
-    public void validateJwtTokenReturnsFalse(){
+    public void validateJwtTokenReturnsFalse() {
         assertThat(jwtUtils.validateJwtToken("fake token")).isFalse();
     }
 }
