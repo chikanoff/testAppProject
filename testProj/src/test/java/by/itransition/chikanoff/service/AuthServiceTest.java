@@ -22,7 +22,7 @@ public class AuthServiceTest extends IntegrationTestBase {
     private JwtUtils jwtUtils;
 
     @Test
-    public void loginReturnsJwtResponse(){
+    public void loginReturnsJwtResponse() {
         User user = createTestUser();
         JwtResponse response = authService.login(user.getUsername(), "password");
         assertThat(jwtUtils.getUserNameFromJwtToken(response.getToken())).isEqualTo(user.getUsername());
