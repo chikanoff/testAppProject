@@ -1,8 +1,8 @@
 spring:
     datasource:
-        url: ${SPRING_DATASOURCE_URL} #jdbc:mysql://${HIBERNATE_DB_HOST}:${HIBERNATE_DB_PORT}/${HIBERNATE_DB_NAME}?useSSL=false
-        username: ${SPRING_DATASOURCE_USERNAME} # ${HIBERNATE_USERNAME}
-        password: ${SPRING_DATASOURCE_PASSWORD} # ${HIBERNATE_PASSWORD}
+        url: jdbc:mysql://${HIBERNATE_DB_HOST}:${HIBERNATE_DB_PORT}/${HIBERNATE_DB_NAME}?useSSL=false
+        username: ${HIBERNATE_USERNAME}
+        password: ${HIBERNATE_PASSWORD}
 
     jpa:
         hibernate:
@@ -11,5 +11,5 @@ spring:
 
 
 # App Properties
-jwtSecret: ${JWT_SECRET} # ${JWT_SECRET_KEY}
-jwtExpirationMs: ${JWTEXPIRATIONMS} # ${JWT_EXPIRATION_TIME}
+jwtSecret: ${JWT_SECRET_KEY}
+jwtExpirationMs: ${JWT_EXPIRATION_TIME}
