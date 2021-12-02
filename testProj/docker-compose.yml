@@ -12,8 +12,8 @@ services:
             SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
             SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
             SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
-            jwtSecret: ${JWT_SECRET_KEY}
-            jwtExpirationMs: ${JWT_EXPIRATION_TIME}
+            JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+            JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
         networks:
             - backend
     mysql_db:
