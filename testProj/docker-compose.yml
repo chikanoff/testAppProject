@@ -8,19 +8,24 @@ services:
             - "8080:8080"
         depends_on:
             -   mysql_db
+            -   rabbitmq
         environment:
             SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
             SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
             SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+            SPRING_RABBITMQ_HOST: rabbitmq
             JWT_SECRET_KEY: ${JWT_SECRET_KEY}
             JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
+            RABBITMQ_QUEUE: ${QUEUE}
+            RABBITMQ_EXCHANGE: ${EXCHANGE}
+            ROUTING_KEY: ${ROUTING_KEY}
         networks:
             - backend
     mysql_db:
         image: "mysql:8.0"
         restart: always
         ports:
-            - "3306:3306"
+            - "3307:3306"
         environment:
             MYSQL_DATABASE: ${DATABASE_DB_NAME}
             MYSQL_USER: ${DATABASE_USERNAME}
@@ -30,9 +35,21 @@ services:
             - backend
         volumes:
             - db-data:/var/lib/mysql
+    rabbitmq:
+        container_name: rabbitmq
+        image: 'rabbitmq:management'
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+            RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+        networks:
+            - backend
 
 volumes:
     db-data:
+
 
 networks:
     backend:

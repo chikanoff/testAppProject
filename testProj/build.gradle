@@ -47,6 +47,7 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt:$jwtVersion"
     implementation "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
 
     testImplementation "org.projectlombok:lombok"
     testAnnotationProcessor "org.projectlombok:lombok"
@@ -55,7 +56,9 @@ dependencies {
     testImplementation "org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.4"
     testImplementation "com.playtika.testcontainers:embedded-mysql:${testContainersVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-
+    testImplementation 'org.assertj:assertj-core:3.21.0'
+    testImplementation 'ch.qos.logback:logback-classic:1.2.7'
+    testImplementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 test {
