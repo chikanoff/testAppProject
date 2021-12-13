@@ -1,4 +1,4 @@
-package by.itransition.chikanoff.service;
+package by.itransition.chikanoff.aspectTesting;
 
 import by.itransition.chikanoff.payloads.message.SimpleMessage;
 import by.itransition.chikanoff.utils.AfterListenerAspect;
@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -41,12 +39,11 @@ public class RabbitListenerIntegrationTest {
     }
 
     @Test
-    public void sendMessageToListener() throws JsonProcessingException, InterruptedException {
-        ObjectMapper mapper = new ObjectMapper();
+    public void sendMessageToListener() throws InterruptedException {
         SimpleMessage message = new SimpleMessage();
-        message.setName("world");
-        producer.pushMessage(mapper.writeValueAsString(message));
+        message.setName("name");
+        producer.pushMessage(message);
         aspect.getLatch().await();
-        assertThat(memoryAppender.search("Hello world").size()).isEqualTo(1);
+        assertThat(memoryAppender.search("Hello name").size()).isEqualTo(1);
     }
 }

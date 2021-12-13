@@ -12,11 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -37,12 +32,10 @@ public class RabbitListenerUnitTest {
     }
 
     @Test
-    public void listenerGotMessageTest() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+    public void listenerGotMessageTest() {
         SimpleMessage message = new SimpleMessage();
         message.setName("world");
-        Message msg = new Message(mapper.writeValueAsString(message).getBytes(StandardCharsets.UTF_8));
-        listener.onMessage(msg);
+        listener.onMessage(message);
         assertThat(memoryAppender.search("Hello world", Level.INFO).size()).isEqualTo(1);
     }
 }

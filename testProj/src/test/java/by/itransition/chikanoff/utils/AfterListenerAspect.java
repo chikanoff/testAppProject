@@ -1,16 +1,16 @@
 package by.itransition.chikanoff.utils;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
 
 @Aspect
 @Component
-@Setter
+@Configurable
 @Getter
 public class AfterListenerAspect {
     private CountDownLatch latch = new CountDownLatch(1);
