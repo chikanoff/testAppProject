@@ -9,7 +9,15 @@ spring:
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+    rabbitmq:
+        host: ${RABBITMQ_HOST}
+        port: ${RABBITMQ_PORT}
+        username: ${RABBITMQ_USERNAME}
+        password: ${RABBITMQ_PASSWORD}
 
 # App Properties
 jwtSecret: ${JWT_SECRET_KEY}
 jwtExpirationMs: ${JWT_EXPIRATION_TIME}
+
+rabbitmq:
+    queue: queue1

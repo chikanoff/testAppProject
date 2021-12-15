@@ -7,7 +7,17 @@ spring:
         url: jdbc:mysql://${embedded.mysql.host}:${embedded.mysql.port}/${embedded.mysql.schema}
         username: ${embedded.mysql.user}
         password: ${embedded.mysql.password}
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
 
 
 jwtSecret: 'asdasd'
 jwtExpirationMs: '1231111'
+
+rabbitmq:
+    queue: queuetest
+    exchange: jcg-exchange
+    routingkey: routingkey1
