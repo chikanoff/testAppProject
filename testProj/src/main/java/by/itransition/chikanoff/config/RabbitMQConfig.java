@@ -14,7 +14,7 @@ public class RabbitMQConfig {
     private String queueName;
 
     @Bean
-    Queue queue() {
+    public Queue queue() {
         return new Queue(queueName, false);
     }
 

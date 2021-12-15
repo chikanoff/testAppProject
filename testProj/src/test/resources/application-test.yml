@@ -18,6 +18,6 @@ jwtSecret: 'asdasd'
 jwtExpirationMs: '1231111'
 
 rabbitmq:
-    queue: queue1
+    queue: queuetest
     exchange: jcg-exchange
     routingkey: routingkey1

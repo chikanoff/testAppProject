@@ -21,5 +21,3 @@ jwtExpirationMs: ${JWT_EXPIRATION_TIME}
 
 rabbitmq:
     queue: queue1
-    exchange: jcg-exchange
-    routingkey: routingkey1

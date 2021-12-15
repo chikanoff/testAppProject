@@ -22,7 +22,7 @@ public class RabbitConfig {
     private String routingKey;
 
     @Bean
-    Queue queue() {
+    private Queue queue() {
         return new Queue(queueName, false);
     }
 
