@@ -1,24 +1,25 @@
-package by.itransition.chikanoff.aspectTesting;
+package by.itransition.chikanoff.utils;
 
 import by.itransition.chikanoff.payloads.message.SimpleMessage;
-import by.itransition.chikanoff.utils.AfterListenerAspect;
-import by.itransition.chikanoff.utils.MemoryAppender;
-import by.itransition.chikanoff.utils.MessageProducer;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@EnableRabbit
 @EnableAspectJAutoProxy
 @SpringBootTest
+@Import(RabbitConfig.class)
 @ActiveProfiles("test")
 public class RabbitListenerIntegrationTest {
     @Autowired

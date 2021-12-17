@@ -22,17 +22,17 @@ public class RabbitConfig {
     private String routingKey;
 
     @Bean
-    private Queue queue() {
+    public Queue queue() {
         return new Queue(queueName, false);
     }
 
     @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
+    public Binding binding(Queue queue, DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 
     @Bean
-    DirectExchange exchange() {
+    public DirectExchange exchange() {
         return new DirectExchange(exchange);
     }
 

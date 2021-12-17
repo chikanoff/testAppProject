@@ -4,3 +4,8 @@ embedded:
         docker-image: mysql:latest
         user: mysql
         password: root
+    rabbitmq:
+        enabled: true
+        docker-image: rabbitmq:latest
+        user: guest
+        password: guest
