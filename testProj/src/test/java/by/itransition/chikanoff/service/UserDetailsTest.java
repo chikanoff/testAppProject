@@ -6,11 +6,15 @@ import by.itransition.chikanoff.services.UserDetailsImpl;
 import by.itransition.chikanoff.services.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 
+import static by.itransition.chikanoff.utils.Constants.USER_CACHE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class UserDetailsTest extends IntegrationTestBase {
+    @Autowired
+    private CacheManager cacheManager;
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -23,12 +27,8 @@ public class UserDetailsTest extends IntegrationTestBase {
 
     @Test
     public void loadByUsernameThenReturnUserDetails() {
-        User user = new User(
-                "testUserDetails",
-                "testDetails",
-                "email@gmail.com",
-                getEncoder().encode("password"));
-        getUserRepository().saveAndFlush(user);
+        cacheManager.getCache(USER_CACHE).clear();
+        User user = createTestUser();
 
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         assertThat(userDetails.getUsername()).isEqualTo(user.getUsername());
