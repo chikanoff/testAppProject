@@ -9,3 +9,6 @@ embedded:
         docker-image: rabbitmq:latest
         user: guest
         password: guest
+    redis:
+        enabled: true
+        dockerImage: redis

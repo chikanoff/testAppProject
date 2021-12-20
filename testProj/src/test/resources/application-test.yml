@@ -14,6 +14,12 @@ spring:
         username: ${embedded.rabbitmq.user}
         password: ${embedded.rabbitmq.password}
 
+    redis:
+        host: ${embedded.redis.host}
+        port: ${embedded.redis.port}
+        user: ${embedded.redis.user}
+        password: ${embedded.redis.password}
+
 
 
 jwtSecret: 'asdasd'

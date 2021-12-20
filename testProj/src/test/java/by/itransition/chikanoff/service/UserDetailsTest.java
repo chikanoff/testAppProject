@@ -28,7 +28,6 @@ public class UserDetailsTest extends IntegrationTestBase {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         assertThat(userDetails.getUsername()).isEqualTo(user.getUsername());
-        assertThat(userDetails.getPassword()).isEqualTo(user.getPassword());
     }
 
     @Test
