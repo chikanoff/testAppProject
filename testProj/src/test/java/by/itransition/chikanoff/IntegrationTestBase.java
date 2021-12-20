@@ -27,7 +27,7 @@ public abstract class IntegrationTestBase {
     public User createTestUser() {
         return userRepository.saveAndFlush(new User(
                 "testFullName",
-                "testUsername",
+                "test",
                 "testEmail@gmail.com",
                 encoder.encode("password")
         ));

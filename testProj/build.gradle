@@ -48,6 +48,7 @@ dependencies {
     implementation "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
     implementation "org.springframework.boot:spring-boot-starter-amqp"
+    implementation "org.springframework.boot:spring-boot-starter-cache"
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
 
     testImplementation "org.projectlombok:lombok"
@@ -57,6 +58,7 @@ dependencies {
     testImplementation "org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.4"
     testImplementation "com.playtika.testcontainers:embedded-mysql:${testContainersVersion}"
     testImplementation "com.playtika.testcontainers:embedded-rabbitmq:${testContainersVersion}"
+    testImplementation "com.playtika.testcontainers:embedded-redis:${testContainersVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation 'org.assertj:assertj-core:3.21.0'
     testImplementation 'ch.qos.logback:logback-classic:1.2.7'

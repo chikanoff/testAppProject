@@ -4,16 +4,25 @@ import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.services.UserDetailsImpl;
 import by.itransition.chikanoff.services.UserDetailsServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.cache.CacheManager;
 
+import static by.itransition.chikanoff.utils.Constants.USER_CACHE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class UserDetailsTest extends IntegrationTestBase {
     @Autowired
+    private CacheManager cacheManager;
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @BeforeEach
+    public void clearCache() {
+        cacheManager.getCache(USER_CACHE).clear();
+    }
 
     @Test
     public void loadByUsernameThenReturnException() {
@@ -26,7 +35,7 @@ public class UserDetailsTest extends IntegrationTestBase {
     public void loadByUsernameThenReturnUserDetails() {
         User user = createTestUser();
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         assertThat(userDetails.getUsername()).isEqualTo(user.getUsername());
         assertThat(userDetails.getPassword()).isEqualTo(user.getPassword());
     }

@@ -19,7 +19,7 @@ services:
             RABBITMQ_PASSWORD: ${RABBITMQ_DEFAULT_PASS}
             JWT_SECRET_KEY: ${JWT_SECRET_KEY}
             JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
-            REDIS_HOST: ${REDIS_HOST}
+            REDIS_HOST: redis
             REDIS_PORT: ${REDIS_PORT}
         networks:
             - backend
@@ -48,21 +48,13 @@ services:
             RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
         networks:
             - backend
-#    redis:
-#        container_name: redis
-#        hostname: redis
-#        image: redis
-#        ports:
-#            - "6379:6379"
-#    redis-commander:
-#        container_name: redis-commander
-#        hostname: redis-commander
-#        image: rediscommander/redis-commander:latest
-#        restart: always
-#        environment:
-#            - REDIS_HOSTS=local:redis:6379
-#        ports:
-#            - "8081:8081"
+    redis:
+        container_name: redis
+        image: redis
+        ports:
+            - "6379:6379"
+        networks:
+            - backend
 
 volumes:
     db-data:
