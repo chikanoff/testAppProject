@@ -9,13 +9,15 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
+import static by.itransition.chikanoff.utils.Constants.USER_CACHE;
+
 @Configuration
 public class RedisConfig {
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(){
         return (builder) -> {
             Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>();
-            configurationMap.put("userCache", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)));
+            configurationMap.put(USER_CACHE, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)));
             builder.withInitialCacheConfigurations(configurationMap);
         };
     }

@@ -6,7 +6,6 @@ import by.itransition.chikanoff.services.UserDetailsImpl;
 import by.itransition.chikanoff.services.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,10 +23,16 @@ public class UserDetailsTest extends IntegrationTestBase {
 
     @Test
     public void loadByUsernameThenReturnUserDetails() {
-        User user = createTestUser();
+        User user = new User(
+                "testUserDetails",
+                "testDetails",
+                "email@gmail.com",
+                getEncoder().encode("password"));
+        getUserRepository().saveAndFlush(user);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         assertThat(userDetails.getUsername()).isEqualTo(user.getUsername());
+        assertThat(userDetails.getPassword()).isEqualTo(user.getPassword());
     }
 
     @Test
