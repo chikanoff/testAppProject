@@ -4,6 +4,7 @@ import by.itransition.chikanoff.IntegrationTestBase;
 import by.itransition.chikanoff.beans.User;
 import by.itransition.chikanoff.services.UserDetailsImpl;
 import by.itransition.chikanoff.services.UserDetailsServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -18,6 +19,11 @@ public class UserDetailsTest extends IntegrationTestBase {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @BeforeEach
+    public void clearCache() {
+        cacheManager.getCache(USER_CACHE).clear();
+    }
+
     @Test
     public void loadByUsernameThenReturnException() {
         User user = createTestUser();
@@ -27,7 +33,6 @@ public class UserDetailsTest extends IntegrationTestBase {
 
     @Test
     public void loadByUsernameThenReturnUserDetails() {
-        cacheManager.getCache(USER_CACHE).clear();
         User user = createTestUser();
 
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(user.getUsername());
